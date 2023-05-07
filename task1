@@ -1,0 +1,28 @@
+public partial class FormMain : Form {
+    private Panel _active_panel;
+    private Dictionary<RadioButton, Panel> _dictionary;
+    public FormMain() {
+        InitializeComponent();
+        _active_panel = panel1;
+        _dictionary = new Dictionary<RadioButton, Panel>() {
+            { radioButton1, panel1 },
+            { radioButton2, panel2 },
+            { radioButton3, panel3 },
+            { radioButton4, panel4 },
+            { radioButton5, panel5 },
+            { radioButton6, panel6 },
+            { radioButton7, panel7 },
+        };
+        foreach(var rb in _dictionary.Keys)
+            rb.CheckedChanged += radioButton_CheckedChanged;
+    }
+    private void radioButton_CheckedChanged(object o, EventArgs e) {
+        RadioButton rb = o as RadioButton;
+        if(rb == null) return;
+        SuspendLayout();
+        _active_panel.Visible = false;
+        _active_panel = _dictionary[rb];
+        _active_panel.Visible = rb.Checked;
+        ResumeLayout(false);
+    }
+}
